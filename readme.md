@@ -32,13 +32,13 @@ Both models represent a **2026 Corolla Altis X 1.6 Manual**.
 ### Control Design
 - **Controller**: Linear Quadratic Regulator (LQR)
 - **Cost Function**:  
-  $
+  $`
 J = \int_0^\infty (x^T Q x + u^T R u)\, dt
-  $
+  `$
 - **Weighting Matrices**:
   - **Dynamic**: $Q = \mathrm{diag}(1,\ 1,\ 100,\ 10)$, $R = 1$
   - **Kinematic**:  
-  $Q = \begin{bmatrix} 100 & 0 \\ 0 & 10 \end{bmatrix},\quad R = 1$
+  $`Q = \begin{bmatrix} 100 & 0 \\ 0 & 10 \end{bmatrix},\quad R = 1`$
   
 - Optimal gain (Dynamic model):  
   $K = [0.7438,\ 0.8688,\ 10.0002,\ 3.182]$
