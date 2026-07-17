@@ -2,16 +2,6 @@
 
 **Modeling & Simulation of an LQR-Controlled LKA System Using Dynamic and Kinematic Bicycle Models**
 
-College of Electrical and Mechanical Engineering (CEME), NUST  
-Mechatronics Department | Degree-45 | Syndicate-A  
-Course: Modeling and Simulation (M&S-321)
-
-**Team Members**
-- Muhammad Saqlain (482581)
-- Muhammad Awais (482577)
-- Basam Murtaza (463884)
-- Ayan Ahmad Khan (455934)
-
 ---
 
 ## Overview
