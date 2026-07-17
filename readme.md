@@ -25,28 +25,27 @@ Both models represent a **2026 Corolla Altis X 1.6 Manual**.
 
 | Aspect      | Dynamic Bicycle Model                        | Kinematic Bicycle Model               |
 | ----------- | -------------------------------------------- | ------------------------------------- |
-| States      | $`[\dot{y},\ \dot{\psi},\ e_y,\ e_\psi]^T`$ | $`[e_y,\ e_\psi]^T`$               |
+| States      | $[\dot{y},\ \dot{\psi},\ e_y,\ e_\psi]^T$ | $[e_y,\ e_\psi]^T$               |
 | Assumptions | Includes mass, yaw inertia, tire slip forces | Zero tire slip, pure geometric motion |
 | Realism     | High (suitable for production analysis)      | Idealized baseline                    |
 
 ### Control Design
 - **Controller**: Linear Quadratic Regulator (LQR)
 - **Cost Function**:  
-  $$
+  $
 J = \int_0^\infty (x^T Q x + u^T R u)\, dt
-  $$
+  $
 - **Weighting Matrices**:
-  - **Dynamic**: $`Q = \operatorname{diag}(1,\ 1,\ 100,\ 10)`$, $`R = 1`$
-- **Kinematic**:  
-  ```math
-  Q = \begin{bmatrix} 100 & 0 \\ 0 & 10 \end{bmatrix},\quad R = 1
-  ```
+  - **Dynamic**: $Q = \mathrm{diag}(1,\ 1,\ 100,\ 10)$, $R = 1$
+  - **Kinematic**:  
+  $Q = \begin{bmatrix} 100 & 0 \\ 0 & 10 \end{bmatrix},\quad R = 1$
+  
 - Optimal gain (Dynamic model):  
-  $`K = [0.7438,\ 0.8688,\ 10.0002,\ 3.182]`$
+  $K = [0.7438,\ 0.8688,\ 10.0002,\ 3.182]$
 
 ### Simulation Environment
 - Platform: MATLAB + Simulink
-- Longitudinal velocity: Constant \( v_x = 20 \) m/s (highway speed)
+- Longitudinal velocity: Constant \( $v_x = 20$ \) m/s (highway speed)
 - Sensor noise: Band-limited white noise, sample time 0.033 s (30 FPS)
 - Disturbances: Lateral force (crosswind) and road curvature
 
