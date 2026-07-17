@@ -2,18 +2,6 @@
 
 **Modeling & Simulation of an LQR-Controlled LKA System Using Dynamic and Kinematic Bicycle Models**
 
-College of Electrical and Mechanical Engineering (CEME), NUST  
-Mechatronics Department | Degree-45 | Syndicate-A  
-Course: Modeling and Simulation (M&S-321)
-
-**Team Members**
-- Muhammad Saqlain (482581)
-- Muhammad Awais (482577)
-- Basam Murtaza (463884)
-- Ayan Ahmad Khan (455934)
-
----
-
 ## Overview
 
 This repository contains the Module 3 deliverables for an academic Lane Keeping Assist (LKA) system project. Modules 1 and 2 established the system configuration and mathematical models. Module 3 focuses on translating those models into a closed-loop simulation environment in **MATLAB/Simulink**.
@@ -37,21 +25,24 @@ Both models represent a **2026 Corolla Altis X 1.6 Manual**.
 
 | Aspect      | Dynamic Bicycle Model                        | Kinematic Bicycle Model               |
 | ----------- | -------------------------------------------- | ------------------------------------- |
-| States      | \( [ \dot{y}, \dot{\psi}, e_y, e_\psi ]^T \) | \( [ e_y, e_\psi ]^T \)               |
+| States      | $`[\dot{y},\ \dot{\psi},\ e_y,\ e_\psi]^T`$ | $`[e_y,\ e_\psi]^T`$               |
 | Assumptions | Includes mass, yaw inertia, tire slip forces | Zero tire slip, pure geometric motion |
 | Realism     | High (suitable for production analysis)      | Idealized baseline                    |
 
 ### Control Design
 - **Controller**: Linear Quadratic Regulator (LQR)
 - **Cost Function**:  
-  \[
-  J = \int_0^\infty (x^T Q x + u^T R u)\, dt
-  \]
+  $$
+J = \int_0^\infty (x^T Q x + u^T R u)\, dt
+  $$
 - **Weighting Matrices**:
-  - Dynamic: \( Q = \operatorname{diag}(1, 1, 100, 10) \), \( R = 1 \)
-  - Kinematic: \( Q = \begin{bmatrix} 100 & 0 \\ 0 & 10 \end{bmatrix} \), \( R = 1 \)
+  - **Dynamic**: $`Q = \operatorname{diag}(1,\ 1,\ 100,\ 10)`$, $`R = 1`$
+- **Kinematic**:  
+  ```math
+  Q = \begin{bmatrix} 100 & 0 \\ 0 & 10 \end{bmatrix},\quad R = 1
+  ```
 - Optimal gain (Dynamic model):  
-  \( K = [0.7438,\ 0.8688,\ 10.0002,\ 3.182] \)
+  $`K = [0.7438,\ 0.8688,\ 10.0002,\ 3.182]`$
 
 ### Simulation Environment
 - Platform: MATLAB + Simulink
@@ -77,6 +68,50 @@ Both models represent a **2026 Corolla Altis X 1.6 Manual**.
 - **Result**: Steady-state lateral error ≈ 0.005 m (Dynamic) / −0.00054 m (Kinematic)  
   (Expected due to lack of integral action in standard LQR)
 
+## Getting Started
+
+### Prerequisites
+- MATLAB R2021a or later (with Simulink)
+- Control System Toolbox (for LQR and state-space design)
+
+### Running the Simulations
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/GrayVite/Lane-Keeping-Assist---Dynamic-Bicycle-Model.git
+   ```
+2. Open MATLAB and navigate to the project root.
+3. Run the initialization script for the desired model:
+   ```matlab
+   cd Dynamic_Model
+   init_params          % Loads A, B, Q, R, K, vehicle parameters
+   open_system('LKA_Dynamic')
+   ```
+4. Run the Simulink model (▶ button) and examine the scopes / logged timeseries.
+
 ---
 
-## Project Structure
+## Key Results Summary
+
+| Metric                        | Dynamic Model      | Kinematic Model     |
+|-------------------------------|--------------------|---------------------|
+| Baseline settling time        | ~1.0 s             | < 0.2 s             |
+| Peak disturbance overshoot    | ~0.03 m            | N/A                 |
+| Curvature steady-state error  | ~0.005 m           | −0.00054 m          |
+| Realism                       | High               | Idealized           |
+
+**Conclusion**: The kinematic model overestimates performance by neglecting inertia and tire forces. The dynamic bicycle model is essential for realistic evaluation of actuator limits, high-speed stability, and sensor degradation.
+
+---
+
+## Limitations & Future Work
+
+### Current Limitations
+- No actuator slew-rate constraints
+- Fixed-speed LQR gains (not gain-scheduled)
+- Direct noisy camera feedback (no state estimation)
+- Standard LQR lacks integral action → residual curve-tracking error
+
+### Proposed Optimizations
+1. **Linear Quadratic Integral (LQI)** – Eliminate steady-state error on curves
+2. **Gain Scheduling** – Pre-compute \( K \) matrices across 5–40 m/s
+3. **Kalman Filter** – Robust state estimation and sensor-dropout handling
