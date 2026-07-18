@@ -57,15 +57,21 @@ J = \int_0^\infty (x^T Q x + u^T R u)\, dt
 - Initial lateral offset: \( 0.3 \) m  
 - Initial heading error: \( 0.05 \) rad (~2.9°)  
 - **Result**: Lateral error settles to 0 m within ~1.0 s (Dynamic) / <0.2 s (Kinematic)
+  <img width="1679" height="1011" alt="Scenario1_baseline" src="https://github.com/user-attachments/assets/80cb3e6c-daef-422c-8e00-e22f4a1f3928" />
+
 
 ### Scenario B – Disturbance Rejection
 - 5000 N lateral force (severe crosswind) applied at \( t = 5 \) s  
 - **Result**: Peak lateral overshoot limited to ~0.03 m; robust recovery
+  <img width="1679" height="1011" alt="Scenario2_LateralForce" src="https://github.com/user-attachments/assets/e7eebd1a-ada9-4339-af84-3e350ab83d0c" />
+
 
 ### Scenario C – Curvature Tracking
 - Constant radius curve: \( R = 500 \) m at 20 m/s  
 - **Result**: Steady-state lateral error ≈ 0.005 m (Dynamic) / −0.00054 m (Kinematic)  
   (Expected due to lack of integral action in standard LQR)
+  <img width="1679" height="1011" alt="Scenario3_Curvature" src="https://github.com/user-attachments/assets/5de4e32b-f1c0-4429-8adf-a406f1bc8d0c" />
+
 
 ## Getting Started
 
